@@ -206,8 +206,8 @@ const audio = new Audio("sounds/" + secretWord.soundName());
 let playingSound = false;
 
 document.querySelector(".image").addEventListener("click", function () {
-  // when clicking this button don't deselect the current text input box
-  document.querySelector(".box1").focus();
+  // when clicking this button don't deselect the current text input box. turned off as was weird on mobile
+  // document.querySelector(".box1").focus();
 
   if (playingSound) {
     audio.pause();
