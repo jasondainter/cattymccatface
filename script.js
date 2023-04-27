@@ -127,6 +127,16 @@ document.querySelector(".check").addEventListener("click", function () {
     // make it rain confetti
     document.querySelector(".confettis").style.display = "block";
 
+    // #TODO FIX! This is not working
+
+    // // play the winning sound PURR.mp3
+    const audio = new Audio("sounds/PURR.mp3");
+    audio.play();
+    console.log(audio);
+
+    // stop the sound from playing if you click the image again
+    //  #TODO couldnt get this to work
+
     // create another eventlistener on click for the again button to reset everything back to normal
     document.querySelector(".check").addEventListener("click", function () {
       // TODO you could create a high score here but this simple reload wouldnt work if so
