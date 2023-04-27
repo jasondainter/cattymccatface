@@ -53,8 +53,8 @@ const secretWord = {
 // );
 console.log(secretWord.soundName());
 
-// set the caret/text cursor to the first input box
-document.querySelector(".box1").focus();
+// set the caret/text cursor to the first input box. Turned off as was causing UX issues
+// document.querySelector(".box1").focus();
 
 /**********************************************************/
 /* FOR LOOP POPULATING THE INPUT BOXES / IMAGE WITH CURRENT SECRET
