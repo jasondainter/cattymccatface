@@ -1,0 +1,3 @@
+# Redirects from what the browser requests to what we serve
+# take out comment hash when the domain DNS has propogated
+# https://cattymccatface.netlify.app/* https://www.cattymccatface.lol/:splat 301!
