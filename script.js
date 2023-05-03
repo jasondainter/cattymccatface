@@ -1,6 +1,17 @@
 "use strict";
 
 /**********************************************************/
+/* LOAD EXTRA VOICES FOR TEXT TO SPEECH */
+/**********************************************************/
+
+let voices = [];
+
+// Wait for the voices to be loaded before populating the `voices` array
+window.speechSynthesis.onvoiceschanged = function () {
+  voices = window.speechSynthesis.getVoices();
+};
+
+/**********************************************************/
 /* SECRET WORD ARRAY STORAGE */
 /**********************************************************/
 
@@ -226,32 +237,54 @@ document.addEventListener("keydown", function (e) {
 /* ON CLICK SOUNDS */
 /**********************************************************/
 
-// Add a sound that gets played automatically when the user clicks the image
+// add a Speech Synthesis text-to-speech sound that plaays the secret word when the user clicks the image
 
-const audio = new Audio("sounds/" + secretWord.soundName());
+img.addEventListener("click", function () {
+  // only do the following once the voices have been loaded
 
-// create a new const audio from the current secretWord soundName property
+  // console.log(speechSynthesis.getVoices());
+  // // log all the names of all the voices in the array to the console
+  // for (let i = 0; i < voices.length; i++) {
+  //   console.log(voices[i].name);
+  // }
 
-// console.log((audio = new Audio("sounds/" + secretWordList.soundName())));
+  const utterance = new SpeechSynthesisUtterance(secretWord.name);
+  utterance.lang = "en-GB";
+  utterance.rate = 0.8; // a little slower
 
-let playingSound = false;
+  utterance.voice = voices[voices.length - 17]; // set the voice to last -17th voice which should be Google UK English Female
 
-document.querySelector(".image").addEventListener("click", function () {
-  // when clicking this button don't deselect the current text input box. turned off as was weird on mobile
-  // document.querySelector(".box1").focus();
+  // Find Google UK English Female voice in the array and set it to the utterance voice
 
-  if (playingSound) {
-    audio.pause();
-    audio.currentTime = 0;
-    playingSound = false;
-  } else {
-    audio.play();
-    playingSound = true;
-    // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
-    audio.addEventListener("ended", function () {
-      playingSound = false;
-      img.style.transform = "scale(1)";
-      img.style.transition = "all 0.2s";
-    });
-  }
+  speechSynthesis.speak(utterance);
 });
+
+// // Add a sound that gets played automatically when the user clicks the image
+
+// const audio = new Audio("sounds/" + secretWord.soundName());
+
+// // create a new const audio from the current secretWord soundName property
+
+// // console.log((audio = new Audio("sounds/" + secretWordList.soundName())));
+
+// let playingSound = false;
+
+// document.querySelector(".image").addEventListener("click", function () {
+//   // when clicking this button don't deselect the current text input box. turned off as was weird on mobile
+//   // document.querySelector(".box1").focus();
+
+//   if (playingSound) {
+//     audio.pause();
+//     audio.currentTime = 0;
+//     playingSound = false;
+//   } else {
+//     audio.play();
+//     playingSound = true;
+//     // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
+//     audio.addEventListener("ended", function () {
+//       playingSound = false;
+//       img.style.transform = "scale(1)";
+//       img.style.transition = "all 0.2s";
+//     });
+//   }
+// });
