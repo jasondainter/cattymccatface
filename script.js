@@ -11,6 +11,10 @@ window.speechSynthesis.onvoiceschanged = function () {
   voices = window.speechSynthesis.getVoices();
 };
 
+// Pre-load the sounds/PURR.mp3 file
+
+// const audio = new Audio("sounds/PURR.mp3");
+
 /**********************************************************/
 /* SECRET WORD ARRAY STORAGE */
 /**********************************************************/
@@ -138,15 +142,10 @@ document.querySelector(".check").addEventListener("click", function () {
     // make it rain confetti
     document.querySelector(".confettis").style.display = "block";
 
-    // #TODO FIX! This is not working
-
     // // play the winning sound PURR.mp3
     const audio = new Audio("sounds/PURR.mp3");
     audio.play();
     console.log(audio);
-
-    // stop the sound from playing if you click the image again
-    //  #TODO couldnt get this to work
 
     // create another eventlistener on click for the again button to reset everything back to normal
     document.querySelector(".check").addEventListener("click", function () {
@@ -240,21 +239,11 @@ document.addEventListener("keydown", function (e) {
 // add a Speech Synthesis text-to-speech sound that plaays the secret word when the user clicks the image
 
 img.addEventListener("click", function () {
-  // only do the following once the voices have been loaded
-
-  // console.log(speechSynthesis.getVoices());
-  // // log all the names of all the voices in the array to the console
-  // for (let i = 0; i < voices.length; i++) {
-  //   console.log(voices[i].name);
-  // }
-
   const utterance = new SpeechSynthesisUtterance(secretWord.name);
   utterance.lang = "en-GB";
   utterance.rate = 0.8; // a little slower
 
   utterance.voice = voices[voices.length - 17]; // set the voice to last -17th voice which should be Google UK English Female
-
-  // Find Google UK English Female voice in the array and set it to the utterance voice
 
   speechSynthesis.speak(utterance);
   // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
@@ -263,33 +252,3 @@ img.addEventListener("click", function () {
     img.style.transition = "all 0.2s";
   };
 });
-
-// // Add a sound that gets played automatically when the user clicks the image
-
-// const audio = new Audio("sounds/" + secretWord.soundName());
-
-// // create a new const audio from the current secretWord soundName property
-
-// // console.log((audio = new Audio("sounds/" + secretWordList.soundName())));
-
-// let playingSound = false;
-
-// document.querySelector(".image").addEventListener("click", function () {
-//   // when clicking this button don't deselect the current text input box. turned off as was weird on mobile
-//   // document.querySelector(".box1").focus();
-
-//   if (playingSound) {
-//     audio.pause();
-//     audio.currentTime = 0;
-//     playingSound = false;
-//   } else {
-//     audio.play();
-//     playingSound = true;
-//     // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
-//     audio.addEventListener("ended", function () {
-//       playingSound = false;
-//       img.style.transform = "scale(1)";
-//       img.style.transition = "all 0.2s";
-//     });
-//   }
-// });
