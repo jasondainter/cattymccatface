@@ -23,7 +23,7 @@ body {
 /* LAYOUT */
 header {
   position: relative;
-  height: 30rem;
+  height: 25rem;
   border-bottom: 7px solid #eee;
   margin-bottom: 13rem;
 }
@@ -58,7 +58,7 @@ h1 {
   text-align: center;
   position: absolute;
   width: 100%;
-  top: 10rem;
+  top: 8rem;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0 1rem;
@@ -92,9 +92,9 @@ h1 {
   transform: scale(1.05, 1.05);
 } */
 
-.image-sound-hover {
+/* .image-sound-hover {
   transform: scale(1.05, 1.05);
-}
+} */
 
 .correct-letter-review-container {
   display: flex;
@@ -181,6 +181,29 @@ https://stackoverflow.com/questions/17952468/css-background-gradient-transition-
   -webkit-animation: AnimationName 1s ease infinite;
   -moz-animation: AnimationName 1s ease infinite;
   animation: AnimationName 1s ease infinite;
+}
+
+.sub-bottom-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
+  gap: 2rem;
+  padding: 0 1rem; /* Add left and right padding */
+}
+
+.hint-link,
+.hint-link:visited,
+.hint-link:active {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.hint-link:hover,
+.hint-link:active {
+  /* randomly choose to change the text between two colours */
+  color: #e75fa1;
 }
 
 @-webkit-keyframes AnimationName {

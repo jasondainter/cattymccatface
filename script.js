@@ -72,6 +72,31 @@ const secretWord = {
 // document.querySelector(".box1").focus();
 
 /**********************************************************/
+/* REUSABLE FUNCTIONS */
+/**********************************************************/
+
+// Function to speak out the word in a UK female accent (otherwise defaults to another normally)
+
+function speakOut(wordToSpeak) {
+  // play the sound of the first letter using speechSynthesis
+  let utterance = new SpeechSynthesisUtterance(wordToSpeak);
+
+  utterance.lang = "en-GB";
+  utterance.rate = 0.8; // a little slower
+
+  const ukVoice = "Google UK English Female";
+  const voice = voices.find((voice) => voice.name === ukVoice);
+
+  if (voice) {
+    utterance.voice = voice;
+  } else {
+    console.log("Voice not found: " + ukVoice);
+    // handle the case where the voice is not found
+  }
+  speechSynthesis.speak(utterance);
+}
+
+/**********************************************************/
 /* FOR LOOP POPULATING THE INPUT BOXES / IMAGE WITH CURRENT SECRET
 /**********************************************************/
 
@@ -96,6 +121,9 @@ for (
     document.querySelector(".box" + (i + 1)).style.display = "none";
   }
 }
+
+// only allow 1 character to be entered into the first input box
+document.querySelector(".box1").maxLength = 1;
 
 /**********************************************************/
 /* WIN OR LOSE LOGIC */
@@ -123,7 +151,10 @@ document.querySelector(".check").addEventListener("click", function () {
     // disable the first input box
     document.querySelector(".box1").disabled = true;
 
-    // Make the input boxes all have a pink gradient background and whie text
+    // hide the hint link
+    document.querySelector(".hint-link").style.display = "none";
+
+    // Make the input boxes all have a pink gradient background and white text
     for (
       let i = 0;
       i < document.querySelectorAll(".letter-boxes .guessbox").length;
@@ -157,6 +188,9 @@ document.querySelector(".check").addEventListener("click", function () {
     /**********************************************************/
     /* LOSER */
     /**********************************************************/
+  } else if (guess === "") {
+    // focus on the first input box
+    document.querySelector(".box1").focus();
   } else {
     document.querySelector("body").style.backgroundColor = "#d30038"; // Change background
 
@@ -180,6 +214,9 @@ document.querySelector(".check").addEventListener("click", function () {
     // make the text of the first input (with correct answer) black
     document.querySelector(".box1").style.color = "#222";
 
+    // hide the hint link
+    document.querySelector(".hint-link").style.display = "none";
+
     // create another eventlistener on click for the again button to reset everything back to normal
     document.querySelector(".check").addEventListener("click", function () {
       // TODO you could create a high score here but this simple reload wouldnt work if so
@@ -189,6 +226,32 @@ document.querySelector(".check").addEventListener("click", function () {
       location.reload();
     });
   }
+});
+
+/**********************************************************/
+/* GIVE A HINT */
+/**********************************************************/
+
+// oputput the secret letter to the console when the hint-link link is clicked
+
+document.querySelector(".hint-link").addEventListener("click", function () {
+  console.log(secretWord.firstLetter());
+  // swap the image to a new image with the first letter .webp
+  // swaop the image with a nice transition
+
+  document.querySelector(".image").src =
+    "img/hints/" + secretWord.firstLetter() + ".webp";
+  console.log("img/hints/" + secretWord.firstLetter().toLowerCase() + ".webp");
+  document.querySelector(".image").alt = secretWord.imageAltText();
+
+  // Call the speakOut function to speak the first letter of the secret word
+  speakOut(secretWord.firstLetter().toLowerCase());
+
+  // swap the image back to the original image after 3 seconds
+  setTimeout(function () {
+    document.querySelector(".image").src = "img/cats/" + secretWord.imageName();
+    document.querySelector(".image").alt = "secretWord.imageAltText()";
+  }, 3000);
 });
 
 /**********************************************************/
@@ -243,25 +306,9 @@ document.addEventListener("keydown", function (e) {
 // add a Speech Synthesis text-to-speech sound that plaays the secret word when the user clicks the image
 
 img.addEventListener("click", function () {
-  const utterance = new SpeechSynthesisUtterance(secretWord.name);
-  utterance.lang = "en-GB";
-  utterance.rate = 0.8; // a little slower
+  // Call the speakOut function to speak the secret word
+  speakOut(secretWord.name);
 
-  const ukVoice = "Google UK English Female";
-  const voice = voices.find((voice) => voice.name === ukVoice);
-
-  if (voice) {
-    utterance.voice = voice;
-  } else {
-    console.log("Voice not found: " + ukVoice);
-    // handle the case where the voice is not found
-  }
-
-  // console.log(voices);
-  // console.log(ukVoice);
-  // console.log(utterance);
-
-  speechSynthesis.speak(utterance);
   // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
   utterance.onend = function () {
     img.style.transform = "scale(1)";
