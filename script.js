@@ -181,6 +181,20 @@ document.querySelector(".check").addEventListener("click", function () {
 /* UX Improvements */
 /**********************************************************/
 
+// Add a javascript powered hover effect to the image
+
+const img = document.querySelector("img");
+
+img.addEventListener("mouseover", function () {
+  img.style.transform = "scale(1.05)";
+  img.style.transition = "all 0.2s";
+});
+
+img.addEventListener("mouseout", function () {
+  img.style.transform = "scale(1)";
+  img.style.transition = "all 0.2s";
+});
+
 // Disable typing in the input boxes except for the first one
 
 for (
@@ -226,5 +240,11 @@ document.querySelector(".image").addEventListener("click", function () {
   } else {
     audio.play();
     playingSound = true;
+    // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
+    audio.addEventListener("ended", function () {
+      playingSound = false;
+      img.style.transform = "scale(1)";
+      img.style.transition = "all 0.2s";
+    });
   }
 });
