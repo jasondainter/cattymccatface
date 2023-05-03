@@ -12,7 +12,7 @@ const secretWordList = [
   "HARRY",
   "JEFF",
   "JOHN",
-  "LUTHOR",
+  "LUTHER",
   "STEVE",
 ];
 
