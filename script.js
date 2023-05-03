@@ -195,6 +195,13 @@ img.addEventListener("mouseout", function () {
   img.style.transition = "all 0.2s";
 });
 
+// apply and remove the same hover effect when tapped on mobile (is removed later after sound finishes)
+
+img.addEventListener("touchstart", function () {
+  img.style.transform = "scale(1.05)";
+  img.style.transition = "all 0.2s";
+});
+
 // Disable typing in the input boxes except for the first one
 
 for (
