@@ -257,6 +257,11 @@ img.addEventListener("click", function () {
   // Find Google UK English Female voice in the array and set it to the utterance voice
 
   speechSynthesis.speak(utterance);
+  // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
+  utterance.onend = function () {
+    img.style.transform = "scale(1)";
+    img.style.transition = "all 0.2s";
+  };
 });
 
 // // Add a sound that gets played automatically when the user clicks the image
