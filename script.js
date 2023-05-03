@@ -21,8 +21,8 @@ window.speechSynthesis.onvoiceschanged = function () {
 
 // All the secret words: Try Limit to 8 chars max (not sure if it breaks after!)
 const secretWordList = [
-  "CARL",
-  "GIZMO",
+  "CHRIS",
+  "GARETH",
   "HARMONY",
   "HARRY",
   "JEFF",
@@ -66,7 +66,7 @@ const secretWord = {
 // console.log(
 //   (document.querySelector(".image").src = "img/" + secretWord.imageName())
 // );
-console.log(secretWord.soundName());
+// console.log(secretWord.soundName());
 
 // set the caret/text cursor to the first input box. Turned off as was causing UX issues
 // document.querySelector(".box1").focus();
@@ -77,14 +77,13 @@ console.log(secretWord.soundName());
 
 for (let i = 0; i < secretWord.totalLetters() - 1; i++) {
   // Console log the letters in the secret word
-  console.log(secretWord.name[i]);
 
   // loop through adding all the letters to the input boxes skipping the first letter
   document.querySelector(".box" + (i + 2)).value = secretWord.name[i + 1];
 }
 
 // Add the image to the page
-document.querySelector(".image").src = "img/" + secretWord.imageName();
+document.querySelector(".image").src = "img/cats/" + secretWord.imageName();
 document.querySelector(".image").alt = secretWord.imageAltText();
 
 // loop thorugh the input boxes and remove or add boxes depending on the length of the secret word
@@ -145,12 +144,14 @@ document.querySelector(".check").addEventListener("click", function () {
     // // play the winning sound PURR.mp3
     const audio = new Audio("sounds/PURR.mp3");
     audio.play();
-    console.log(audio);
 
     // create another eventlistener on click for the again button to reset everything back to normal
     document.querySelector(".check").addEventListener("click", function () {
       // TODO you could create a high score here but this simple reload wouldnt work if so
       location.reload();
+      // force the first input box to be selected and made empty
+      document.querySelector(".box1").focus();
+      document.querySelector(".box1").value = "";
     });
 
     /**********************************************************/
@@ -182,6 +183,9 @@ document.querySelector(".check").addEventListener("click", function () {
     // create another eventlistener on click for the again button to reset everything back to normal
     document.querySelector(".check").addEventListener("click", function () {
       // TODO you could create a high score here but this simple reload wouldnt work if so
+      // force the first input box to be selected and made empty
+      document.querySelector(".box1").focus();
+      document.querySelector(".box1").value = "";
       location.reload();
     });
   }
@@ -243,7 +247,19 @@ img.addEventListener("click", function () {
   utterance.lang = "en-GB";
   utterance.rate = 0.8; // a little slower
 
-  utterance.voice = voices[voices.length - 17]; // set the voice to last -17th voice which should be Google UK English Female
+  const ukVoice = "Google UK English Female";
+  const voice = voices.find((voice) => voice.name === ukVoice);
+
+  if (voice) {
+    utterance.voice = voice;
+  } else {
+    console.log("Voice not found: " + ukVoice);
+    // handle the case where the voice is not found
+  }
+
+  // console.log(voices);
+  // console.log(ukVoice);
+  // console.log(utterance);
 
   speechSynthesis.speak(utterance);
   // after the sound has finished playing, set playingSound to false and replicate the mouseout function to stop the image from being scaled up on mobile tap
