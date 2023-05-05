@@ -6,4 +6,8 @@ All images were generated with Midjourney v5, and it is made in pure HTML, CSS a
 
 All spoken word sounds are generated using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank">Javascript Web Speech API</a>
 
+# Links
+
 Play the game at 👉 http://www.cattymccatface.lol
+
+See public analytics at 👉 https://plausible.io/cattymccatface.lol
